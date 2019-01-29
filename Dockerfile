@@ -1,13 +1,18 @@
-FROM php:7-fpm
+FROM php:7.2-fpm
 
 MAINTAINER Mehrdad Dadkhah <mehrdad@dadkhah.me>
 
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    freetype* \
     libpng-dev \
-    libpq-dev \
-    g++ \
+    libwebp-dev \
+    libjpeg-dev \
+    libsodium-dev \
+    openssl \
+    gcc make g++ \
+    autoconf \
     libicu-dev \
     libxml2-dev \
     git \
@@ -18,16 +23,23 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libmagickwand-dev --no-install-recommends \
     libzip-dev \
+    libonig-dev \
+    libpq-dev \
     procps
 
 RUN docker-php-ext-configure intl \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install intl \
     && docker-php-ext-install zip \
+    && docker-php-ext-install pdo \
     && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo_pgsql pgsql \
     && docker-php-ext-install soap \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd \
+        --with-freetype=/usr/lib/ \
+        --with-jpeg=/usr/lib/ \
+        --with-webp=/usr \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install mysqli \
@@ -36,7 +48,22 @@ RUN docker-php-ext-configure intl \
     && pecl install imagick  \
     && docker-php-ext-enable imagick \
     && pecl install apcu \
-    && docker-php-ext-enable apcu
+    && docker-php-ext-enable apcu \
+    && docker-php-ext-install sysvsem \
+    && docker-php-ext-install pcntl \
+    && docker-php-ext-install sysvshm \
+    && docker-php-ext-install sysvmsg \
+    && docker-php-ext-install sockets
+
+RUN apt-get install -y $PHPIZE_DEPS
+RUN pecl install xdebug
+# it was not needed because I was installing with pecl
+# Configure Xdebug
+RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=coverage,debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini
+
 
 ENV PHPREDIS_VERSION 3.1.4
 
