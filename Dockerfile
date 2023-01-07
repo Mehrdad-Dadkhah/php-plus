@@ -34,10 +34,11 @@ RUN apt-get update && apt-get install -y \
     texi2html \
     libmp3lame-dev \
     wget \
-    yasm
+    yasm;
 
 
 # Run build script
+RUN ech "Try to install ffmpeg..."
 
 ADD script/buildFFmpeg.sh /build.sh
 RUN ["/bin/bash", "/build.sh"]
