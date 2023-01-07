@@ -44,7 +44,7 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-install sysvmsg \
     && docker-php-ext-install sockets
 
-ENV PHPREDIS_VERSION 5.1.1
+ENV PHPREDIS_VERSION 5.3.7
 
 RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz  \
     && mkdir /tmp/redis \
