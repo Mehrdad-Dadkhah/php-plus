@@ -1,8 +1,11 @@
-# php7 (PHP-FPM)
+# PHP-PLUS (PHP-FPM)
+
+Last PHP plus extensions and main tools in common in all projects
+
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/mehrdadkhah/php7.svg?maxAge=2592000?style=flat-square)](https://hub.docker.com/r/mehrdadkhah/php7/) [![Docker Build Statu](https://img.shields.io/docker/build/mehrdadkhah/php7.svg?style=flat-square)](https://hub.docker.com/r/mehrdadkhah/php7/) [![Docker Automated buil](https://img.shields.io/docker/automated/mehrdadkhah/php7.svg?style=flat-square)](https://hub.docker.com/r/mehrdadkhah/php7/)
 
-Docker php7 with critical extensions (redis, gd, apcu, intl, soap, pdo, mbstring, iconv and ... )
+Docker php with critical extensions (redis, gd, apcu, intl, soap, pdo, mbstring, iconv and ... )
 
 You can use alpine version and ubuntu base version.
 
@@ -88,4 +91,5 @@ you can use [lemp-php7 docker compose](https://github.com/Mehrdad-Dadkhah/lemp-p
 
 ## Last update
 
-- 08 NOV 2021
+- 07 Jan 2023
+
