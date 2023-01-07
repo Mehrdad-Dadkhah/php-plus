@@ -2,7 +2,7 @@ FROM php:fpm-alpine
 
 # install extensions
 # intl, zip, soap
-RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev \
+RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev libzip-dev \
     && docker-php-ext-install intl zip soap
 
 # mysqli, pdo, pdo_mysql, pdo_pgsql
