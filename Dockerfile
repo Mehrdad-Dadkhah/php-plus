@@ -1,4 +1,4 @@
-FROM php:7-fpm
+FROM php:latest
 
 MAINTAINER Mehrdad Dadkhah <mehrdad@dadkhah.me>
 
