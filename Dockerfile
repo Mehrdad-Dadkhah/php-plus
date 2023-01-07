@@ -2,7 +2,7 @@ FROM mehrdadkhah/php7:latest
 
 MAINTAINER Mehrdad Dadkhah <mehrdad@dadkhah.me>
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -yy \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
@@ -34,11 +34,11 @@ RUN apt-get update && apt-get install -y \
     texi2html \
     libmp3lame-dev \
     wget \
-    yasm;
+    yasm & echo "done!"
 
 
 # Run build script
-RUN ech "Try to install ffmpeg..."
+RUN echo "Try to install ffmpeg..."
 
 ADD script/buildFFmpeg.sh /build.sh
 RUN ["/bin/bash", "/build.sh"]
