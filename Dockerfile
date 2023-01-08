@@ -1,23 +1,54 @@
 FROM php:fpm-alpine
 
-# install extensions
-# intl, zip, soap
-RUN apk add --update --no-cache libintl icu icu-dev libxml2-dev libzip-dev \
-    && docker-php-ext-install intl zip soap
-
-# mysqli, pdo, pdo_mysql, pdo_pgsql
-RUN apk add --update --no-cache postgresql-dev \
-    && docker-php-ext-install mysqli pdo pdo_mysql
-
-# mcrypt, gd, iconv
 RUN apk add --update --no-cache \
+        libintl \
+        icu \
+        icu-dev \
+        icu-data-full \
+        libxml2-dev \
+        libzip-dev \
+        freetype \
+        libpng \
+        libjpeg-turbo \
         freetype-dev \
-        libjpeg-turbo-dev \
-        libmcrypt-dev \
         libpng-dev \
-    && docker-php-ext-install -j"$(getconf _NPROCESSORS_ONLN)" iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j"$(getconf _NPROCESSORS_ONLN)" gd
+        jpeg-dev \
+        libwebp-dev \
+        libjpeg \
+        libjpeg-turbo-dev \
+        libsodium-dev \
+        openssl \
+        postgresql-dev \
+        curl \
+        libcurl \
+        gcc make g++ \
+        autoconf \
+        linux-headers \
+        vim
+
+RUN apk add --no-cache --update  \
+    --repository http://dl-cdn.alpinelinux.org/alpine/v3.13/community/ \
+    --allow-untrusted \
+    gnu-libiconv
+
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
+
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS
+RUN pecl install xdebug
+# it was not needed because I was installing with pecl
+RUN docker-php-ext-install intl zip soap exif pcntl sockets
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-configure gd \
+        --with-freetype=/usr/lib/ \
+        --with-jpeg=/usr/lib/ \
+        --with-webp=/usr
+RUN docker-php-ext-install -j"$(getconf _NPROCESSORS_ONLN)" gd
+
+# Configure Xdebug
+RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.mode=coverage,debug" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.discover_client_host=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.client_port=9000" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # gmp
 RUN apk add --update --no-cache gmp gmp-dev \
