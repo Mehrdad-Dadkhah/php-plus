@@ -3,20 +3,7 @@ FROM mehrdadkhah/php7:latest
 MAINTAINER Mehrdad Dadkhah <mehrdad@dadkhah.me>
 
 RUN apt-get update && apt-get install -yy \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
     libpq-dev \
-    g++ \
-    libicu-dev \
-    libxml2-dev \
-    git \
-    vim \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    zlib1g-dev \
-    libmagickwand-dev --no-install-recommends \
     procps && apt-get -qqy install --no-install-recommends \
     autoconf \
     automake \
