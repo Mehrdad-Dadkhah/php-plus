@@ -4,7 +4,6 @@ RUN apk add --update --no-cache \
         libintl \
         icu \
         icu-dev \
-        icu-data-full \
         libxml2-dev \
         libzip-dev \
         freetype \
@@ -34,7 +33,7 @@ RUN apk add --no-cache --update  \
 ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS
-RUN pecl install xdebug
+RUN pecl install xdebug-2.9.0
 # it was not needed because I was installing with pecl
 RUN docker-php-ext-install intl zip soap exif pcntl sockets
 RUN docker-php-ext-install mysqli pdo pdo_mysql
