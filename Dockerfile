@@ -37,9 +37,9 @@ RUN pecl install xdebug-2.9.0
 RUN docker-php-ext-install intl zip soap exif pcntl sockets
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN docker-php-ext-configure gd \
-        --with-freetype-dir=/usr/lib/ \
-        --with-jpeg-dir=/usr/lib/ \
-        --with-webp-dir=/usr
+        --with-freetype=/usr/lib/ \
+        --with-jpeg=/usr/lib/ \
+        --with-webp=/usr
 RUN docker-php-ext-install -j"$(getconf _NPROCESSORS_ONLN)" gd
 
 # Configure Xdebug
