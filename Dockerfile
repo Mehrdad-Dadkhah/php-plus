@@ -2,9 +2,7 @@ FROM php:7.1-fpm-alpine
 
 RUN apk add --update --no-cache \
         libintl \
-        icu \
-        icu-dev \
-        icu-data-full \
+        icu icu-dev icu-libs icu-data-full \
         libxml2-dev \
         libzip-dev \
         freetype \
