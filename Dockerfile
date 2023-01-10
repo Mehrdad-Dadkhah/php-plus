@@ -37,9 +37,9 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-install pdo_pgsql pgsql \
     && docker-php-ext-install soap \
     && docker-php-ext-configure gd \
-        --with-freetype=/usr/lib/ \
-        --with-jpeg=/usr/lib/ \
-        --with-webp=/usr \
+        --with-freetype-dir=/usr/lib/ \
+        --with-jpeg-dir=/usr/lib/ \
+        --with-webp-dir=/usr \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install mysqli \
