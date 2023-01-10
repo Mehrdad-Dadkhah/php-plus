@@ -56,7 +56,7 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-install sockets
 
 RUN apt-get install -y $PHPIZE_DEPS
-RUN pecl install xdebug
+RUN pecl install xdebug-2.9.0
 # it was not needed because I was installing with pecl
 # Configure Xdebug
 RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini \
